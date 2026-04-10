@@ -1,14 +1,15 @@
-# core/assistant.py
-from core.parser import interpretar
+from services.ai_service import interpretar_com_ia
 from core.executor import executar_acao
-from services.ai_service import responder
 
 def processar(comando: str):
-    resultado = interpretar(comando)
+    resultado = interpretar_com_ia(comando)
 
     if resultado["tipo"] == "acao":
         executar_acao(resultado["acao"])
-        return "Executando..."
+        return f"Executando {resultado['acao']}"
 
     elif resultado["tipo"] == "pergunta":
-        return responder(resultado["texto"])
+        return "Pergunta detectada (ainda não conectada à IA)"
+
+    else:
+        return "Erro ao interpretar comando"
